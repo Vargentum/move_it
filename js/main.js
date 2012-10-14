@@ -26,4 +26,16 @@ $(function(){
 //            columns: columnCount
 //        });
 //    }
+    $('.b-sideNav .primeList__item').each(function(){
+        $(this).click(function(){
+            $('.b-sideNav .primeList__item').removeClass('active');
+            $(this).addClass('active');
+            var target = $(this).siblings('.subList');
+            if(!$(target).hasClass('active')){
+                $('.b-sideNav .subList').removeClass('active').slideUp();
+                $(target).addClass('active').slideDown();
+            }
+            else{return false;}
+        });
+    });
 });

@@ -38,22 +38,20 @@ $linkActiveColor:#cf1818;
 $linkVisitedColor:#4a63b6;
 $linkFocusedColor:#cf1818;
 //set colors here;
-$titleColor:blue;
+$titleColor:#911616;
 $attentionColor:red;
 $servColor:grey;
 //base font params--------------------
 $baseFontFamily: Arial, "Helvetica CY", "Nimbus Sans L", sans-serif;
-$baseFontColor: #252525;
-$baseFontSize:14px;
+$baseFontColor: #4f5360;
+$baseFontSize:12px;
 $baseLineHeight: 1.4;
 //other fonts
 $indexFont: Calibri, Candara, Segoe, "Segoe UI", Optima, Arial, sans-serif;
 $navFont: "Trebuchet MS", "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", Tahoma, sans-serif;
 //layout params-----------------------
 $baseWidth: 970px;
-//$baseMinWidth: 980px;
-//$baseMaxWidth: 1280px;
-$ftrHeight:50px;
+$ftrHeight: 826px;
 
 /*HELPER CLASSES
 ---------------------------------------------------------*/
@@ -122,7 +120,7 @@ $ftrHeight:50px;
 --------------------------------------------*/
 @mixin input{}
 @mixin textarea{}
-@mixin h1{font-size: 2em;margin: 0.67em 0;}
+@mixin h1{font-size: 31px; font-weight: bold; margin: 20px 0; color: $titleColor;}
 @mixin h2{font-size: 1.5em;margin: 0.83em 0;}
 @mixin h3{font-size: 1.17em;margin: 1em 0;}
 @mixin h4{font-size: 1em;margin: 1.33em 0;}
@@ -136,6 +134,7 @@ $ftrHeight:50px;
   h3{@include h1;}
   ul{@include h1;}
   ol{@include h1;}
+  p{line-height: 2;margin-bottom: 20px;}
 }
 .defaultCss{@include defaultCss;}
 @mixin link{
@@ -158,17 +157,14 @@ a{@include link;}
     height: 100%;
     margin: 0 auto;
     width: $baseWidth
-    //min-width: $baseMinWidth;
-    //max-width: $baseMaxWidth;
   }
-  .l-pageContentWrap{padding-bottom: $ftrHeight !important;}
-  .l-baseFooter{
+  .l-pageContentWrap{padding-bottom:230px;}
+  .l-pageFooter{
     position: relative;
     height: $ftrHeight;
     margin: -$ftrHeight auto 0;
-    width: $baseWidth
-    //min-width: $baseMinWidth;
-    //max-width: $baseMaxWidth;
+    z-index: 1;
+    background: url(../images/bg-footer_with_lightSpot.png) 50% 0 no-repeat;
   }
 }
 html, button, input, select, textarea {
@@ -181,7 +177,7 @@ body {
   font-size: $baseFontSize;
   line-height: $baseLineHeight;
   @include layout;
-  background: #000 url(../images/bg-1.png);
+  background: #000 url(../images/bg-body.png);
   &.m-index{background-image: url(../images/bg-index-body.jpg);}
   background-size: cover;
   position: relative;
@@ -194,8 +190,38 @@ body {
   background: url(../images/bg-hdr.jpg);
   height: 145px;
 }
+.b-langChoise{
+  @include hList;
+  margin:6px 0 0 55px;
+  .item{
+    display: block;
+    width:29px; height: 19px;
+    margin-right: 7px;
+  }
+  .english{@include icons-sprite(lang-1);}
+  .deutsch{@include icons-sprite(lang-2);}
+}
+.b-social{
+  margin:6px 55px 0 0;
+  @include hList;
+  .item{
+    display: block;
+    width:19px;
+    height: 19px;
+    margin-left: 6px;
+  }
+  .google{@include icons-sprite(soc-1);}
+  .facebook{@include icons-sprite(soc-2);width:18px;}
+  .linked_in{@include icons-sprite(soc-3);}
+}
 //main logotype
-.b-hdrLogo{}
+.b-hdrLogo{
+  display: block;
+  margin-top: 5px;
+  text-align: center;
+  position: relative;
+  z-index: 2;
+}
 //main navigation
 .b-mainNav{
   padding:0 45px;
@@ -245,7 +271,6 @@ body {
   &>*{z-index: 2;position: relative;}
   border-top: 1px solid #0d182f;
   position: relative;
-  padding-top: 30px;
   &:before{
     @include pseudoBlockAbs;
     background: url(../images/light-content-lt.png);
@@ -267,7 +292,15 @@ body {
 
 /* Footer
 ------------------------------------*/
-.l-pageFooter {
+.b-copy{
+  display: block;
+  font-family: Verdana, Geneva, sans-serif;
+  color: #fff;
+  text-align: center;
+  width:100%;
+  position: absolute;
+  bottom:45px;
+  text-shadow: 0 2px #000;
 }
 //footer on index page
 .l-indexFooter{}
@@ -285,18 +318,46 @@ body {
 //side navigation
 .b-sideNav{
   vertical-align: top;
-  width:260px;
-  margin-left: -20px;
+  width:255px;
+  margin: 10px 0 0 -19px;
   position: relative;
-  .primeList{
-  }
+  .primeList{}
   .primeList__item{
     display: block;
-    background: #224382;
-    border-bottom: 1px solid #152548;
+    background-color: #224382;
+    //border-bottom: 1px solid #152548;
     font:20px $navFont;
-    padding:0 15px;
+    text-transform: uppercase;
+    text-decoration: none;
+    padding:6px 30px;
     margin:20px 0;
+    @include link-colors(#8ca7d9, #8ca7d9);
+    position: relative;
+    &:hover, &:focus, &.active{
+      background-color: #b82313;
+      @include box-shadow(0 0 21px rgba(220,12,12,.4));
+    }
+    &:before{
+      @include pseudoBlockAbs;
+      background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABMAAAALCAMAAACqC0YIAAAAllBMVEUVLGcSI1AWL2wYMG8XLmmLGLcbL3EVLGgYMG8wK34WLmoYJ18UI08SIUsQGjsgLHAVJVc9KIYlK3cWKFwSIk4aL3AaLGkUKFsUKF0YK2cXLmodLnBkIJ4AAAD/AP8VLGUVLGUWLGQVK2QVLGcSIUwVLGUVLGUSIUwWLWkSHUERGz0VK2QUKF0TJVQSIUwWLmwRGTkTHkIhoLk5AAAAH3RSTlP+/bJozAIy93sJzkOh4fcXYgYOhvs+NLbjX4wgAwAByh7YCwAAAGFJREFUeNpdyNkOgjAQBdAJirKrEGW/idKH0UgG/v/naKiB1vN4KL9mk+tDwCV5zw6CFqfKth5uhRp3BONRfjfU46eunoZ1aBtmFuaXdejukWiDPksYnNdzEidP5P/gH44LxR4bnOJRXQYAAAAASUVORK5CYII=);
+      width:19px;
+      height: 11px;
+      top:100%;
+      left:0;
+    }
+  }
+  .subList{margin-left: 50px;
+    display: none;
+  }
+  .subList__item{
+    text-decoration: none;
+    display: block;
+    padding:3px 0;
+    &:before{
+      content: '●';
+      padding-right: 7px;
+    }
+    &:hover,&:focus{outline: none; margin-left: 7px;}
   }
 }
 /*INDEX page specific elements styles
@@ -341,8 +402,14 @@ body {
   padding-left: 55px;
 }
 
-/*some page specific elements styles
+/*WELCOME page specific elements styles
 ------------------------------------------------------------------------------------------------*/
+.b-promoText{
+  width:680px;
+  padding-right: 50px;
+  @include defaultCss;
+  //h1:first-child{margin-top: 10px;}
+}
 /*some page specific elements styles
 ------------------------------------------------------------------------------------------------*/
 
