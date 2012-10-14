@@ -21,6 +21,8 @@
 @import "compass/typography";
 @import "compass/utilities";
 
+@import "icons/*.png";
+@import "nav/*.png";
 
 //border-box-sizing for all elems
 *{@include box-sizing(border-box);}
@@ -30,11 +32,11 @@ input[type=search]{@include box-sizing(border-box);}
 /*VARIABLES
 --------------------------------------------*/
 //set liks color here
-$linkDefaultColor:#b53228;
-$linkHoverColor:#b53228;
-$linkActiveColor:#b53228;
-$linkVisitedColor:#b53228;
-$linkFocusedColor:#b53228;
+$linkDefaultColor:#4a63b6;
+$linkHoverColor:#cf1818;
+$linkActiveColor:#cf1818;
+$linkVisitedColor:#4a63b6;
+$linkFocusedColor:#cf1818;
 //set colors here;
 $titleColor:blue;
 $attentionColor:red;
@@ -46,9 +48,9 @@ $baseFontSize:14px;
 $baseLineHeight: 1.4;
 //other fonts
 $indexFont: Calibri, Candara, Segoe, "Segoe UI", Optima, Arial, sans-serif;
-$sideBarFont: "Trebuchet MS", "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", Tahoma, sans-serif;
+$navFont: "Trebuchet MS", "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", Tahoma, sans-serif;
 //layout params-----------------------
-$baseWidth: 960px;
+$baseWidth: 970px;
 //$baseMinWidth: 980px;
 //$baseMaxWidth: 1280px;
 $ftrHeight:50px;
@@ -179,35 +181,89 @@ body {
   font-size: $baseFontSize;
   line-height: $baseLineHeight;
   @include layout;
+  background: #000 url(../images/bg-1.png);
   &.m-index{background-image: url(../images/bg-index-body.jpg);}
   background-size: cover;
+  position: relative;
 }
 
-.l-pageWrap {}
+.l-pageWrap {background: #000;position: relative;}
 /* page header
 ----------------------------------*/
-.l-pageHeader {}
+.l-pageHeader {
+  background: url(../images/bg-hdr.jpg);
+  height: 145px;
+}
 //main logotype
 .b-hdrLogo{}
 //main navigation
 .b-mainNav{
-  ul{
-    @include hList;
-    //@include jList_singleLine;
+  padding:0 45px;
+  position: relative;
+  z-index: 2;
+  ul{@include jList;}
+  .item{
+    display: block;
+    white-space: nowrap;
+    position: relative;
+    font: 18px/1.1 $navFont;
+    text-shadow: 0 0 18px rgba(183,35,21,.7);
+    span{@include inline-block;}
+    &:before{
+      content: '';
+      @include inline-block;
+      position: relative;
+    }
+    @for $i from 1 through 5{
+      &.item-#{$i}:before{
+        @include nav-sprite(nav#{$i});
+        padding-right: 9px;
+      }
+      &.item-#{$i}.active:before{
+        @include nav-sprite(navActive#{$i});
+        padding-right: 0;
+        margin:-5px -10px -5px -20px;
+      }
+    }
+    &.item-1:before{width: 53px; height: 44px;}
+    &.item-1.active:before{width: 94px; height: 84px;}
+    &.item-2:before{width: 51px; height: 44px;}
+    &.item-2.active:before{width: 91px; height: 84px;}
+    &.item-3:before{width: 60px; height: 37px;top:3px;}
+    &.item-3.active:before{width: 101px; height: 78px;}
+    &.item-4:before{width: 43px; height: 44px;}
+    &.item-4.active:before{width: 43px; height: 44px;}
+    &.item-5:before{width: 42px; height: 39px;top:5px;}
+    &.item-5.active:before{width: 83px; height: 80px;}
   }
-  .item{}
+
+
 }
 /* page content
 ------------------------------------*/
-.l-contentWrap {
-
+.l-pageContentWrap{
+  &>*{z-index: 2;position: relative;}
+  border-top: 1px solid #0d182f;
+  position: relative;
+  padding-top: 30px;
+  &:before{
+    @include pseudoBlockAbs;
+    background: url(../images/light-content-lt.png);
+    width:709px;
+    height: 541px;
+    top:0;left:0;
+    z-index: 1;
+  }
+  &:after{
+    @include pseudoBlockAbs;
+    background: url(../images/light-content-rt.png);
+    width:503px;
+    height: 655px;
+    top:-200px;
+    right:0;
+    z-index: 1;
+  }
 }
-  //main column-------------->
-  .l-columnMain{}
-  //left column-------------->
-  .l-columnLt{}
-  //right column-------------->
-  .l-columnRt{}
 
 /* Footer
 ------------------------------------*/
@@ -223,13 +279,25 @@ body {
   position: absolute;
   width:100%;
   top:25px;
-  z-index: 9999;
+  //z-index: 9999;
   border-top: 10px solid #000;
 }
-//bread crumbs
-.b-crumbs{
-  ul{@include hList;}
-  .item{}
+//side navigation
+.b-sideNav{
+  vertical-align: top;
+  width:260px;
+  margin-left: -20px;
+  position: relative;
+  .primeList{
+  }
+  .primeList__item{
+    display: block;
+    background: #224382;
+    border-bottom: 1px solid #152548;
+    font:20px $navFont;
+    padding:0 15px;
+    margin:20px 0;
+  }
 }
 /*INDEX page specific elements styles
 -----------------------------------------------------------------------------------------------*/
@@ -277,6 +345,7 @@ body {
 ------------------------------------------------------------------------------------------------*/
 /*some page specific elements styles
 ------------------------------------------------------------------------------------------------*/
+
 /*plugins styles
 ------------------------------------------------------------------------------------------------*/
 

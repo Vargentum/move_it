@@ -17,11 +17,14 @@
     <script src="js/vendor/modernizr-2.6.1.min.js"></script>
 </head>
 <body itemscope itemtype='http://schema.org/WebPage'>
-<!--[if lt IE 9]><p class=chromeframe>Внимание! Вы используете <em>устаревший браузер!</em> Страница может загружаться долго, а часть элементов сайта выводится в упрощенном виде. Чтобы увидеть полноценную версию сайта - <a href="http://browsehappy.com/">установите новый современный браузер</a> - это увеличит скорость загрузки страниц в несколько раз, или <a href="http://www.google.com/chromeframe/?redirect=true">установите расширение Google Chrome Frame для Internet Explorer</a> - это позволит вам увеличить скорость загрузки страниц не покидая браузер.</p><![endif]-->
+
+
+<!--top lighters-->
+<div class="b-topLighters"></div>
+<!--end top lighters-->
 
 <!-- WRAPPER -->
 <div class="l-pageWrap">
-
     <!-- HEADER -->
     <header class="l-pageHeader" itemscope itemtype='http://schema.org/WPHeader'>
         <!--main logo-->
@@ -40,24 +43,23 @@
 
     <!-- CONTENT -->
     <div class="l-pageContentWrap">
-        <!--breadcrumbs-->
-        <nav class="b-crumbs" itemprop='breadcrumb'>
-            <ul>
-                <li><a href="#" class="item"></a></li>
-                <li><a href="#" class="item"></a></li>
-            </ul>
-        </nav>
+        <div class="l-jList">
         <!--main column with content-->
         <div class="l-pageContent" role="main"></div>
         <!--end main column with content-->
 
-        <!--left sidebar-->
-        <aside class="l-sidebarLt" itemscope itemtype='http://schema.org/WPSideBar'></aside>
-        <!--end left sidebar-->
-
-        <!--right sidebar-->
-        <aside class="l-sidebarRt" itemscope itemtype='http://schema.org/WPSideBar'></aside>
-        <!--end right sidebar-->
+        <!--side navigation-->
+        <nav class="b-sideNav" itemscope itemtype='http://schema.org/SiteNavigationElement'>
+            <ul class="primeList">
+                <li><a href="#" class="primeList__item">Наш концепт</a></li>
+                <li><a href="#" class="primeList__item">Ивенты</a></li>
+                <li><a href="#" class="primeList__item">Наши услуги</a></li>
+                <li><a href="#" class="primeList__item">Команда</a></li>
+                <li><a href="#" class="primeList__item">Клиенты</a></li>
+            </ul>
+        </nav>
+        <!--end side navigation-->
+        </div><!--end l-jList-->
     </div><!-- END CONTENT -->
 
 </div><!-- END WRAPPER -->
