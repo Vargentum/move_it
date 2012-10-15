@@ -21,9 +21,11 @@
 @import "compass/typography";
 @import "compass/utilities";
 
+//sprites imports
 @import "icons/*.png";
 @import "nav/*.png";
-
+@import "scene/*.png";
+@import "content_shadows/*.png";
 //border-box-sizing for all elems
 *{@include box-sizing(border-box);}
 input[type=search]{@include box-sizing(border-box);}
@@ -118,8 +120,6 @@ $ftrHeight: 826px;
 
 /*DEFAULT STYLES
 --------------------------------------------*/
-@mixin input{}
-@mixin textarea{}
 @mixin h1{font-size: 31px; font-weight: bold; margin: 20px 0; color: $titleColor;}
 @mixin h2{font-size: 1.5em;margin: 0.83em 0;}
 @mixin h3{font-size: 1.17em;margin: 1em 0;}
@@ -144,7 +144,18 @@ $ftrHeight: 826px;
   &:focus {outline: thin dotted;}
   &:active,&:hover {outline: 0;}
 }
-a{@include link;}
+a{
+  @include link;
+  &:focus, &:hover{outline: none;}
+}
+input,textarea{
+  @include border-radius;
+  background-color: #d9e1fe;
+  border: solid 1px #23246c;
+  @include single-transition(all,.4s,ease,0s);
+  &:invalid{background-color: #d9e1fe;}
+  &:focus{outline: none; box-shadow: 0 0 15px 5px #8e0a78;}
+}
 /*OBJECTS mixins
 --------------------------------------------*/
 
@@ -163,8 +174,15 @@ a{@include link;}
     position: relative;
     height: $ftrHeight;
     margin: -$ftrHeight auto 0;
-    z-index: 1;
-    background: url(../images/bg-footer_with_lightSpot.png) 50% 0 no-repeat;
+    background: url(../images/bg-footer.png) 50% 0 no-repeat;
+    &:before{
+      @include pseudoBlockAbs;
+      bottom:0;
+      width:100%;
+      height: 130px;
+      background: #000;
+      z-index: -1;
+    }
   }
 }
 html, button, input, select, textarea {
@@ -233,7 +251,7 @@ body {
     white-space: nowrap;
     position: relative;
     font: 18px/1.1 $navFont;
-    text-shadow: 0 0 18px rgba(183,35,21,.7);
+    &.active{text-shadow: 0 0 18px rgba(183,35,21,.7);}
     span{@include inline-block;}
     &:before{
       content: '';
@@ -258,7 +276,7 @@ body {
     &.item-3:before{width: 60px; height: 37px;top:3px;}
     &.item-3.active:before{width: 101px; height: 78px;}
     &.item-4:before{width: 43px; height: 44px;}
-    &.item-4.active:before{width: 43px; height: 44px;}
+    &.item-4.active:before{width: 84px; height: 85px;}
     &.item-5:before{width: 42px; height: 39px;top:5px;}
     &.item-5.active:before{width: 83px; height: 80px;}
   }
@@ -273,7 +291,7 @@ body {
   position: relative;
   &:before{
     @include pseudoBlockAbs;
-    background: url(../images/light-content-lt.png);
+    @include content_shadows-sprite(shadow_lt);
     width:709px;
     height: 541px;
     top:0;left:0;
@@ -281,7 +299,7 @@ body {
   }
   &:after{
     @include pseudoBlockAbs;
-    background: url(../images/light-content-rt.png);
+    @include content_shadows-sprite(shadow_rt);
     width:503px;
     height: 655px;
     top:-200px;
@@ -312,8 +330,8 @@ body {
   position: absolute;
   width:100%;
   top:25px;
-  //z-index: 9999;
   border-top: 10px solid #000;
+  &.active{z-index: 9999;}
 }
 //side navigation
 .b-sideNav{
@@ -364,10 +382,10 @@ body {
 -----------------------------------------------------------------------------------------------*/
 .b-scene{
   width:800px;
-  margin: 60px auto 0;
   height: 530px;
-  background: url(../images/bg-scene_without_lights.png);
-  &.lighted{background: url(../images/bg-scene_with_lights.png);}
+  margin: 60px auto 0;
+  @include scene-sprite(without_lights);
+  &.lighted{@include scene-sprite(with_lights);}
 }
 .l-indexFooter{
   width:700px;
@@ -410,11 +428,258 @@ body {
   @include defaultCss;
   //h1:first-child{margin-top: 10px;}
 }
-/*some page specific elements styles
+/*GUEST BOOK (contact_us) page specific elements styles
 ------------------------------------------------------------------------------------------------*/
-
+.feedback_form{
+  color:#8ca7d9;
+  padding:35px 35px 0;
+  .title{
+    padding-bottom: 10px;
+    font-size: 20px;
+    letter-spacing: 2px;
+    border-bottom: 1px solid #25214a;
+    position: relative;
+    cursor: pointer;
+    &:before{
+      @include pseudoBlockAbs;
+      right: 0;
+      top:50%;
+      width: 0;
+      height: 0;
+      border-left: 7px solid transparent;
+      border-right: 7px solid transparent;
+      border-top: 7px solid #ba0000;
+    }
+    &.active:before{
+      border-top: none;
+      border-bottom: 7px solid $attentionColor;
+    }
+  }
+  .expanded{
+    display: none;padding-top:40px;
+    margin-bottom: -30px;
+  }
+  label{@include jList;display: block;margin-bottom: 20px;}
+  .label{}
+  .label__required:after{content: ' *';color:$attentionColor;}
+  input{width: 374px;height: 31px;margin-right: 305px;}
+  textarea{width:680px; height: 285px;}
+  .m-verticalAlign_top{vertical-align: top;}
+  .m-paddingTop_7{padding-top: 7px;}
+  button{
+    float: right;
+    font-weight: bold;
+    color:#8ca7d9;
+    text-transform: uppercase;
+    @include border-radius(2px);
+    background-color: #042d46;
+    border: solid 1px #294a77;
+    //border-bottom-color: #0e294c;
+    @include background-image(linear-gradient(top, rgba(43,75,122,.49), rgba(19,48,90,.49) 50%, rgba(42,79,123,.49) 81%, rgba(8,24,49,.49)));
+    padding:3px 8px;
+  }
+}
+.feedback_list{
+  color:#8ca7d9;
+  padding:0 35px;
+  li{border-bottom: 1px solid #25214a;}
+  .title{
+    padding:10px 0;
+    font-size: 20px;
+    letter-spacing: 2px;
+  }
+  .item{}
+  .item__header{
+    @include jList;
+    padding:10px 0;
+  }
+  .item__author{
+    font-weight: bold;
+    font-size: 15px;
+    letter-spacing: 2px;
+  }
+  time{font-weight: bold;letter-spacing: 1px;padding-top: 2px;}
+  .item__content{
+    background: #161926;
+    font-style: italic;
+    color:#8ca7d9;
+    padding:25px 20px;
+    margin-bottom: 20px;
+  }
+}
+.b-pagination{
+  font-size: 13px;
+  padding: 15px 0;
+  @include hList;
+  ul{@include hList;}
+  a{
+    text-decoration: none;
+    @include link-colors(#6e77c2, $linkHoverColor);
+    position: relative;
+    padding: 0 10px;
+  }
+  text-align: center;
+  .item{
+    &:hover{top:-3px;padding-bottom: 3px;}
+  }
+  .control{
+    &:after{content: ' >>';}
+  }
+}
+/*GALLERY page specific elements styles
+------------------------------------------------------------------------------------------------*/
+.b-gallery{
+  padding:40px 50px 0; @include jList;
+  li{margin:10px 0;border:1px solid #212549;}
+}
 /*plugins styles
 ------------------------------------------------------------------------------------------------*/
+#lightboxOverlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 9999;
+  background-color: black;
+  filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=85);
+  opacity: 0;
+  display: none;
+}
+
+#lightbox {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  z-index: 10000;
+  text-align: center;
+  line-height: 0;
+  font-family: "lucida grande", tahoma, verdana, arial, sans-serif;
+  font-weight: normal;
+}
+#lightbox img {
+  width: auto;
+  height: auto;
+}
+.lb-image{
+  @include border-radius;
+  border:3px solid #725ceb;
+}
+.lb-container {
+  padding:10px 18px 18px 10px;
+}
+.lb-outerContainer {
+  position: relative;
+  overflow: hidden;
+  background-color: #12162f;
+  *zoom: 1;
+  width: 250px;
+  height: 250px;
+  margin: 0 auto;
+  @include border-radius;
+  border:1px solid #8e0a78;
+  box-shadow: 0 0 15px 5px #8e0a78;
+}
+.lb-nav {
+  position: absolute;
+  @include border-radius;
+  top: 0;
+  left: 0;
+  width:100%;
+  height: 100%;
+  z-index: 10;
+}
+
+.lb-outerContainer:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+.lb-loader {
+  position: absolute;
+  top: 40%;
+  left: 0%;
+  height: 25%;
+  width: 100%;
+  text-align: center;
+  line-height: 0;
+}
+
+
+.lb-container > .nav {left: 0;}
+.lb-nav a {
+  outline: none;
+}
+.lb-prev {
+  left: 0;
+  display: block;
+  position: absolute;
+  left:-50px;
+  top:50%;
+  margin-top: -50px;
+  width: 100px ;height: 100px;
+  @include border-radius(50%);
+  background: #fadae5;
+  text-align: right;
+  padding:0 15px;
+  cursor: pointer;
+  &:before{
+    content: '<';
+    font: bold 50px $indexFont;
+    line-height: 95px;
+    color: #121528;
+    left:10px;
+    top:50%;
+  }
+}
+.lb-next {
+  @extend .lb-prev;
+  left:auto;
+  right:-50px;
+  text-align: left;
+  &:before{content: '>';}
+}
+.lb-dataContainer {
+  margin: 5px auto;
+  *zoom: 1;
+  width: 100%;
+  @include border-radius;
+  display: none !important;
+}
+.lb-dataContainer:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+.lb-data {
+  padding: 0 10px;
+  color: #bbbbbb;
+}
+.lb-data .lb-details {
+  width: 85%;
+  float: left;
+  text-align: left;
+  line-height: 1.1em;
+}
+.lb-data .lb-caption {
+  font-size: 13px;
+  font-weight: bold;
+  line-height: 1em;
+}
+.lb-data .lb-number {
+  display: block;
+  clear: left;
+  padding-bottom: 1em;
+  font-size: 11px;
+}
+.lb-data .lb-close {
+  width: 35px;
+  float: right;
+  padding-bottom: 0.7em;
+  outline: none;
+}
+.lb-data .lb-close:hover {
+  cursor: pointer;
+}
 
 
 //debug
